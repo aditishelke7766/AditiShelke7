@@ -1,0 +1,70 @@
+
+#This API Project is developed in python for a practice purpose . I have used https://restful-booker.herokuapp.com/   site which provieds URL's for API testing support .
+This is basically Hotel Booking webite for PALM resort .
+
+POST - NewBooking.py , UserAuthentication.py
+PUT  - UpdateBooking.py
+PATCH - PartialBookingUpdate.py
+GET  - GetDetailsByID.py
+DELETE - DeleteBooking
+
+
+
+DIfference between POST , PUT , PATCH
+
+POST, PUT, and PATCH are HTTP methods used to perform different operations on a resource in a RESTful API. Here's a breakdown of their differences:
+
+POST (Create): The POST method is used to create a new resource on the server. When you send a POST request to a specific endpoint,
+ you are requesting the server to store the provided data as a new resource. The server generates a unique identifier (e.g., an ID or URI) for the newly
+ created resource and includes it in the response. Subsequent requests to this newly created resource are typically done using the provided identifier.
+
+PUT (Update/Replace): The PUT method is used to update or replace an entire existing resource with the new data sent in the request.
+ When you send a PUT request to a specific endpoint, you are instructing the server to replace the resource at that location with the provided data.
+ If the resource already exists, it will be updated with the new data. If the resource does not exist,
+ the server may create a new resource using the provided data and the specified identifier.
+
+PATCH (Update/Modify): The PATCH method is used to make partial updates to an existing resource.
+It allows you to send only the changes or modifications you want to apply to the resource, rather than replacing the entire resource.
+In a PATCH request, you send a set of instructions or changes in the request payload, specifying what attributes or fields of the resource you want to update.
+The server then applies those changes to the existing resource.
+
+
+EXCEPTION HANDLING With Python while working with HTTP Calls API
+
+
+When making HTTP calls in Python, you can handle exceptions using try-except blocks to gracefully handle potential errors. The requests library, commonly used for HTTP requests,
+provides specific exceptions that you can catch. Here's an example of how you can handle exceptions for HTTP calls:
+
+import requests
+from requests.exceptions import RequestException, HTTPError, ConnectionError, Timeout
+
+def make_http_call(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
+        print("HTTP call successful!")
+        # Process the response data
+    except HTTPError as e:
+        print(f"HTTP error occurred: {e}")
+    except ConnectionError as e:
+        print(f"Connection error occurred: {e}")
+    except Timeout as e:
+        print(f"Timeout error occurred: {e}")
+    except RequestException as e:
+        print(f"An error occurred during the request: {e}")
+
+# Example usage
+url = "https://api.example.com/data"
+make_http_call(url)
+
+In the example above, the make_http_call function performs an HTTP GET request using requests.get. The response is then checked for errors using response.raise_for_status(), which raises an exception for 4xx or 5xx status codes.
+
+In the try-except block, specific exceptions derived from RequestException are caught and handled accordingly:
+
+HTTPError is raised for 4xx and 5xx status codes.
+ConnectionError is raised when a connection cannot be established.
+Timeout is raised when a request times out.
+RequestException is a general exception for all request-related errors.
+You can add more except blocks to handle other specific exceptions as needed, such as TooManyRedirects, SSLError, etc., depending on your requirements.
+
+Remember to replace "https://api.example.com/data" with the actual URL you want to make an HTTP call to.
